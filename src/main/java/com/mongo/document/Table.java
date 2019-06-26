@@ -3,44 +3,47 @@ package com.mongo.document;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "Table")
+import java.util.ArrayList;
+import java.util.List;
+
+@Document(collection = "table")
 public class Table {
 
     @Id
     private String id;
 
-    private boolean booked;
+    private List<Boolean> booked;
     private String userid;
 
 
 
-    public Table(String id, boolean booked, String userid) {
+    public Table(String id, List<Boolean> booked, String userid) {
         this.id = id;
-        this.booked = booked;
+        this.booked = new ArrayList<Boolean>(booked);
         this.userid = userid;
-    }
-
-    public void setUserid(String userid) {
-        this.userid = userid;
-    }
-
-    public String getUserid() {
-        return userid;
     }
 
     public String getId() {
         return id;
     }
 
-    public boolean isBooked() {
-        return booked;
-    }
-
     public void setId(String id) {
         this.id = id;
     }
 
-    public void setBooked(boolean booked) {
+    public List<Boolean> getBooked() {
+        return booked;
+    }
+
+    public void setBooked(List<Boolean> booked) {
         this.booked = booked;
+    }
+
+    public String getUserid() {
+        return userid;
+    }
+
+    public void setUserid(String userid) {
+        this.userid = userid;
     }
 }
