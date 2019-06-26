@@ -13,14 +13,16 @@ public class Table {
     private String id;
 
     private List<Boolean> booked;
-    private String userid;
+    private List<String> username;
+    private List<String> mobile;
 
 
 
-    public Table(String id, List<Boolean> booked, String userid) {
+    public Table(String id, List<Boolean> booked,List<String> username,List<String> mobile ) {
         this.id = id;
         this.booked = new ArrayList<Boolean>(booked);
-        this.userid = userid;
+        this.username = new ArrayList<String>(username);
+        this.mobile = new ArrayList<String>(mobile);
     }
 
     public String getId() {
@@ -39,11 +41,19 @@ public class Table {
         this.booked = booked;
     }
 
-    public String getUserid() {
-        return userid;
+    public List<String> getUsername() {
+        return username;
     }
 
-    public void setUserid(String userid) {
-        this.userid = userid;
+    public void setUsername(List<String> username) {
+        this.username = username;
+    }
+
+    public List<String> getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(List<String> mobile) {
+        this.mobile = mobile;
     }
 }
