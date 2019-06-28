@@ -1,9 +1,8 @@
 package com.mongo.controller;
 
-import com.mongo.document.Booking;
-import com.mongo.document.Time;
+import com.mongo.document.*;
 import com.mongo.repository.TimeRepository;
-import com.mongo.document.Table;
+import com.mongo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,68 +19,37 @@ public class RestaurantController {
     @Autowired
     private TimeRepository timeRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @RequestMapping("/book")
     public List<Time> getTimeSlots() {
         return timeRepository.findAll();
     }
     @RequestMapping(value = "/available", method = RequestMethod.POST)
-    public List<Time> checkSlotAvailable(@RequestBody Integer startTime, @RequestBody Integer endTime) {
-        List<Time> slot = new ArrayList<Time>(timeRepository.findByStartTimeAndEndTime(startTime, endTime));
-        return slot;
-    }
-
-    /*
-    @RequestMapping("/allTables")
-    public List<Table> getTables() {
-        return restRepository.findAll();
-    }
-
-    @RequestMapping("/test")
-    public String test() {
-        return "Working!";
-    }
-
-    @RequestMapping("/tables")
-
-    
-    public List<Boolean> availableTables() {
-        List<Table> tables = restRepository.findAll();
-        List<Boolean> available = new ArrayList<Boolean>(Arrays.asList(false,false,false,false,false,false,false,false,false,false));
-
-        for(int i = 0; i<10; i++) {
-
-            for(int j=0; j<10; j++) {
-                if (tables.get(j).getBooked().get(i) == false) {
-                    available.set(i, true);
-                    break;
-                }
-            }
+    public boolean checkSlotAvailable(@RequestBody Slot timeSlot) {
+        Time currSlot =  timeRepository.findOneByStartTimeAndEndTime(timeSlot.startTime, timeSlot.endTime);
+        if (currSlot.getFreeTables() > 0) {
+            return true;
         }
+        return false;
 
-        return available;
     }
 
     @RequestMapping(value = "/bookTable", method = RequestMethod.POST)
     public void bookTable(@RequestBody Booking info) {
-        List<Table> tables = restRepository.findAll();
+        Time currSlot =  timeRepository.findOneByStartTimeAndEndTime(info.getStartTime(), info.getEndTime());
+        currSlot.setFreeTables( currSlot.getFreeTables()-1 );
 
-        for(int i = 0; i<info.getIndex().size(); i++) {
-            for (int j = 0; j < 10; j++) {
-                if ( tables.get(j).getBooked().get( info.getIndex().get(i) ) == false ) {
-                    //update
-                    tables.get(j).getBooked().set( info.getIndex().get(i), true );
-                    tables.get(j).getUsername().set( info.getIndex().get(i), info.getName() );
-                    tables.get(j).getMobile().set( info.getIndex().get(i), info.getMobile() );
-                    restRepository.save(tables.get(j));
+        User newUser = new User(info.getName(), info.getMobile(), info.getStartTime().toString() + " " + info.getEndTime().toString()) ;
+        userRepository.save(newUser);
 
-                    break;
-                }
-            }
-        }
+        String newUserId = userRepository.findOneByMobile(newUser.getMobile()).getId();
 
+        currSlot.getUserId().add(newUserId);
 
+        timeRepository.save(currSlot);
 
     }
-     */
 
 }

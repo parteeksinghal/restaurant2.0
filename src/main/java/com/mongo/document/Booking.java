@@ -4,18 +4,19 @@ import java.util.List;
 
 public class Booking {
 
-    List<Integer> index;
-    String name;
-    String mobile;
+    private String name;
+    private String mobile;
+    private Integer startTime;
+    private Integer endTime;
 
-
-    public List<Integer> getIndex() {
-        return index;
+    public Booking(String name, String mobile, Integer startTime, Integer endTime) {
+        this.name = name;
+        this.mobile = mobile;
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 
-    public void setIndex(List<Integer> index) {
-        this.index = index;
-    }
+
 
     public String getName() {
         return name;
@@ -33,9 +34,19 @@ public class Booking {
         this.mobile = mobile;
     }
 
-    public Booking(List<Integer> index, String name, String mobile) {
-        this.index = index;
-        this.name = name;
-        this.mobile = mobile;
+    public Integer getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Integer startTime) {
+        this.startTime = startTime;
+    }
+
+    public Integer getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Integer endTime) {
+        this.endTime = endTime;
     }
 }

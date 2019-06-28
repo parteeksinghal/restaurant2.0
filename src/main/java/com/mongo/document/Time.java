@@ -7,14 +7,14 @@ import java.util.List;
 
 @Document(collection = "time")
 public class Time {
-    private int startTime, endTime, totalTables, freeTables;
-    private Integer id;
+    private int startTime, endTime, totaltables, freeTables;
+    private String id;
     List<String> userId;
 
-    public Time(int startTime, int endTime, int totalTables, int freeTables, Integer id, List<String> userId) {
+    public Time(int startTime, int endTime, int totaltables, int freeTables, String id, List<String> userId) {
         this.startTime = startTime;
         this.endTime = endTime;
-        this.totalTables = totalTables;
+        this.totaltables = totaltables;
         this.freeTables = freeTables;
         this.id = id;
         this.userId = new ArrayList<String>(userId);
@@ -36,12 +36,12 @@ public class Time {
         this.endTime = endTime;
     }
 
-    public int getTotalTables() {
-        return totalTables;
+    public int getTotaltables() {
+        return totaltables;
     }
 
-    public void setTotalTables(int totalTables) {
-        this.totalTables = totalTables;
+    public void setTotaltables(int totaltables) {
+        this.totaltables = totaltables;
     }
 
     public int getFreeTables() {
@@ -52,11 +52,11 @@ public class Time {
         this.freeTables = freeTables;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

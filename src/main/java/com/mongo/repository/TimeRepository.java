@@ -9,4 +9,6 @@ import java.util.List;
 
 public interface TimeRepository extends MongoRepository<Time, Integer> {
     public List<Time> findByStartTimeAndEndTime (Integer startTime, Integer LastTime);
+
+    public Time findOneByStartTimeAndEndTime (Integer startTime, Integer LastTime);
 }
