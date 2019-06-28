@@ -30,6 +30,8 @@ public class RestaurantController {
     }
 
     @RequestMapping("/tables")
+
+    
     public List<Boolean> availableTables() {
         List<Table> tables = restRepository.findAll();
         List<Boolean> available = new ArrayList<Boolean>(Arrays.asList(false,false,false,false,false,false,false,false,false,false));
