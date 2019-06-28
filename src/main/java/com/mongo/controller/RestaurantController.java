@@ -1,7 +1,8 @@
 package com.mongo.controller;
 
 import com.mongo.document.Booking;
-import com.mongo.repository.RestaurantRepository;
+import com.mongo.document.Time;
+import com.mongo.repository.TimeRepository;
 import com.mongo.document.Table;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,8 +18,19 @@ import java.util.List;
 public class RestaurantController {
 
     @Autowired
-    private RestaurantRepository restRepository;
+    private TimeRepository timeRepository;
 
+    @RequestMapping("/book")
+    public List<Time> getTimeSlots() {
+        return timeRepository.findAll();
+    }
+    @RequestMapping(value = "/available", method = RequestMethod.POST)
+    public List<Time> checkSlotAvailable(@RequestBody Integer startTime, @RequestBody Integer endTime) {
+        List<Time> slot = new ArrayList<Time>(timeRepository.findByStartTimeAndEndTime(startTime, endTime));
+        return slot;
+    }
+
+    /*
     @RequestMapping("/allTables")
     public List<Table> getTables() {
         return restRepository.findAll();
@@ -70,5 +82,6 @@ public class RestaurantController {
 
 
     }
+     */
 
 }
