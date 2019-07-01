@@ -26,8 +26,24 @@ public class RestaurantController {
     public List<Time> getTimeSlots() {
         return timeRepository.findAll();
     }
+
+    @RequestMapping("/slots")
+    public List<Slot> getSlots() {
+        List<Time> timeSlots = timeRepository.findAll();
+        List<Slot> slots = new ArrayList<Slot>();
+
+        for(int i=0; i<timeSlots.size(); i++){
+           slots.add( new Slot(timeSlots.get(i).getStartTime(), timeSlots.get(i).getEndTime()) );
+        }
+
+        return slots;
+    }
+
+
     @RequestMapping(value = "/available", method = RequestMethod.POST)
     public boolean checkSlotAvailable(@RequestBody Slot timeSlot) {
+        System.out.println(timeSlot.startTime);
+        System.out.println(timeSlot.endTime);
         Time currSlot =  timeRepository.findOneByStartTimeAndEndTime(timeSlot.startTime, timeSlot.endTime);
         if (currSlot.getFreeTables() > 0) {
             return true;
